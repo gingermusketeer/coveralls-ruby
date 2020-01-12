@@ -60,7 +60,7 @@ module Coveralls
 
     def self.set_service_params_for_circleci(config)
       config[:service_name]         = 'circleci'
-      config[:service_number]       = ENV['CIRCLE_BUILD_NUM']
+      config[:service_number]       = ENV['CIRCLE_WORKFLOW_ID']
       config[:service_pull_request] = (ENV['CI_PULL_REQUEST'] || "")[/(\d+)$/,1]
       config[:parallel]             = ENV['CIRCLE_NODE_TOTAL'].to_i > 1
       config[:service_job_number]   = ENV['CIRCLE_NODE_INDEX']
@@ -207,7 +207,8 @@ module Coveralls
           {
             :circleci_build_num => ENV['CIRCLE_BUILD_NUM'],
             :branch => ENV['CIRCLE_BRANCH'],
-            :commit_sha => ENV['CIRCLE_SHA1']
+            :commit_sha => ENV['CIRCLE_SHA1'],
+            :circle_workflow_id => ENV['CIRCLE_WORKFLOW_ID'],
           }
         elsif ENV['JENKINS_URL']
           {
